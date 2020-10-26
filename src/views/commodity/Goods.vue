@@ -28,7 +28,11 @@
         <el-table-column prop="goods_name" label="商品名称" width="600px"></el-table-column>
         <el-table-column prop="goods_price" label="商品价格（元）"></el-table-column>
         <el-table-column prop="goods_weight" label="商品重量" width="50px"></el-table-column>
-        <el-table-column prop="add_time" label="创建时间" width="150px"></el-table-column>
+        <el-table-column label="创建时间" width="150px">
+          <template slot-scope="scope">
+              {{scope.row.add_time | dateFormat}}
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="120px">
           <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
@@ -81,34 +85,6 @@ export default {
       this.goodsList = res.data.goods;
       this.total = res.data.total;
       // console.log(this.goodsList);
-      this.goodsList.forEach((item) => {
-        return (item.add_time = this.getDateStr(item.add_time));
-      });
-    },
-    // 时间转换
-    getDateStr(seconds) {
-      let date = new Date(seconds * 1000);
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
-      let hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-      let minute =
-        date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-      let second =
-        date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-      let currentTime =
-        year +
-        "-" +
-        month +
-        "-" +
-        day +
-        "  " +
-        hour +
-        ":" +
-        minute +
-        ":" +
-        second;
-      return currentTime;
     },
     // 每页展示大小改变
     handleSizeChange(pagesize) {

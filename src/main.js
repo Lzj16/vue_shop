@@ -9,6 +9,10 @@ import '@/assets/css/global.css'
 // 导入字体样式
 import '@/assets/fonts/iconfont.css'
 
+// 导入过滤器
+import filters from './filters'
+Vue.use(filters);
+
 // 导入NProgress进度条及样式文件
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -19,7 +23,7 @@ axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 Vue.prototype.$http = axios
 
 // 请求在到达服务器之前，先会调用use中的这个回调函数来添加请求头信息
-axios.interceptors.request.use( config => {
+axios.interceptors.request.use(config => {
   NProgress.start() // 请求时开启进度条
   // 为请求头对象，添加token验证的Authorization字段
   config.headers.Authorization = sessionStorage.getItem('token');
@@ -32,7 +36,7 @@ axios.interceptors.response.use(config => {
 
 // 全局注册第三方表格组件
 import ZkTable from 'vue-table-with-tree-grid'
-Vue.component('tree-table',ZkTable)
+Vue.component('tree-table', ZkTable)
 
 // 导入富文本编辑器并进行全局注册
 import VueQuillEditor from 'vue-quill-editor'

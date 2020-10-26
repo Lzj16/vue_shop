@@ -30,7 +30,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="is_send" label="是否发货"></el-table-column>
-        <el-table-column prop="create_time" label="下单时间"></el-table-column>
+        <el-table-column label="下单时间">
+          <template slot-scope="scope">
+              {{scope.row.create_time | dateFormat}}
+          </template>
+        </el-table-column>
         <el-table-column label="操作">
           <template>
             <el-button
@@ -150,35 +154,7 @@ export default {
       }
       // console.log(res);
       this.orderList = res.data.goods;
-      this.total = res.data.total;
-      this.orderList.forEach((item) => {
-        return (item.create_time = this.getDateStr(item.create_time));
-      });
-    },
-    // 时间转换
-    getDateStr(seconds) {
-      let date = new Date(seconds * 1000);
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
-      let hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-      let minute =
-        date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-      let second =
-        date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-      let currentTime =
-        year +
-        "-" +
-        month +
-        "-" +
-        day +
-        "  " +
-        hour +
-        ":" +
-        minute +
-        ":" +
-        second;
-      return currentTime;
+      this.total = res.data.total;    
     },
     // 每页展示大小改变
     handleSizeChange(pagesize) {
